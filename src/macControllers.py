@@ -3,47 +3,31 @@ import numpy
 
 import mss
 import pyautogui
+from pynput.mouse import Button, Controller
 import time
-import constant
-
-# print(pyautogui.__version__)
-# print('Press Ctrl-C to quit.')
-
-# try:
-#     while True:
-#         # Get and print the mouse coordinates.
-#         print("la")
-#         x, y = pyautogui.position()
-#         positionStr = 'X: ' + str(x).rjust(4) + ' Y: ' + str(y).rjust(4)
-# except KeyboardInterrupt:
-#     print('\nDone.')
-#
-# print(positionStr, end='')
-# print('\b' * len(positionStr), end='', flush=True)
-
-# for i in range(2):
-#   pyautogui.moveTo(100, 100, duration=0.25)
-#   pyautogui.moveTo(200, 100, duration=0.25)
-#   pyautogui.moveTo(200, 200, duration=0.25)
-#   pyautogui.moveTo(100, 200, duration=0.25)
-#
-# print(pyautogui.position())
+from constant import BLACK_PIXEL_THRESHOLD, CLICK_POSITION_LATENCY
 
 print(pyautogui.size())
 print(pyautogui.position())
 
 class MouseController:
+    mouse = Controller()
+
     @staticmethod
     def queryPosition():
         return pyautogui.position()
 
     @staticmethod
     def click(x, y):
-        pyautogui.click(x, y)
+        # pyautogui.click(x, y)
+        MouseController.mouse.position = (x, y)
+        time.sleep(CLICK_POSITION_LATENCY)
+        MouseController.mouse.click(Button.left, 1)
 
     @staticmethod
     def moveTo(x, y):
-        pyautogui.moveTo(x, y)
+        # pyautogui.moveTo(x, y)
+        MouseController.mouse.position = (x, y)
 
 class KeyboardController:
     @staticmethod
