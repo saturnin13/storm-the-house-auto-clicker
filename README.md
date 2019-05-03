@@ -6,8 +6,14 @@ Creation of an automated bot to automatically play the game storm the house
 
 Note that it only works for Mac.
 
-Make sure to install the required dependencies
+```bash
+# Install dependencies
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 
-run autoclicker: `python main.py`
+# Run auto-clicker
+./src/main.py
+```
 
 It should all run automatically.
