@@ -9,8 +9,9 @@ GAME_BOX_COORDINATES = {"x_top_left": 540, "y_top_left": 640, "x_bottom_right": 
 AMMO_PIXEL_COORDINATES = {"x_top_left": 575, "y_top_left": 379, "x_bottom_right": 576, "y_bottom_right": 380} # {"top": 540, "left": 540, "width": 500, "height": 225}
 
 BLACK_PIXEL_THRESHOLD = 10
-DISTANCE_FROM_LAST_CLICK = {'x': 30, 'y': 30}
+DISTANCE_FROM_LAST_CLICK = {'x': 35, 'y': 35} # Dead stickmans are 64 x 10 and standing ones are 25 x 53
 STICKER_SPEED_ADJUSTMENT = 0
+NUMBER_OF_PIXEL_ANALYSE_PER_SCREENSHOT = 3
 
 TIME_SLEEPING_BETWEEN_SHOOTINGS = 0.1
 SLEEP_AFTER_SHOOT = 0.00001

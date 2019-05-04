@@ -6,7 +6,8 @@ import pyautogui
 from constant import BLACK_PIXEL_THRESHOLD, GAME_BOX_COORDINATES, STICKER_SPEED_ADJUSTMENT, \
     SPACE, TIME_SLEEPING_BETWEEN_SHOOTINGS, \
     PYAUTOGUI_ACTION_DELAY, SLEEP_AFTER_SHOOT, SLEEP_AFTER_RELOAD, AMMO_PIXEL_COORDINATES, POSITION_SNIPER_RIFLE, \
-    POSITION_CLIP_SIZE_INCREASE, POSITION_DONE_MENU_BUTTON, DISTANCE_FROM_LAST_CLICK
+    POSITION_CLIP_SIZE_INCREASE, POSITION_DONE_MENU_BUTTON, DISTANCE_FROM_LAST_CLICK, \
+    NUMBER_OF_PIXEL_ANALYSE_PER_SCREENSHOT
 from macControllers import MouseController, ScreenController, KeyboardController
 from utils import Utils
 
@@ -19,7 +20,8 @@ class StormTheHouseAutoClicker:
         self.startTime = time.time()
 
 
-    def start(self, activateOnLeftScreenTouch):
+    def start(self, activateOnLeftScreenTouch, automaticMenuSkipping):
+        self.automaticMenuSkipping = automaticMenuSkipping
         while True:
             mouse_pos = MouseController.queryPosition()
             if mouse_pos.x <= 0 or not activateOnLeftScreenTouch:
@@ -51,7 +53,8 @@ class StormTheHouseAutoClicker:
                 greyScreen = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
 
                 if self.__inMenu(greyScreen):
-                    self.__upgradeStuff()
+                    if self.automaticMenuSkipping:
+                        self.__upgradeStuff()
                 else:
                     self.__shootStickmans(greyScreen)
                     if self.__isEmptyAmmo():
@@ -70,9 +73,9 @@ class StormTheHouseAutoClicker:
         last_found_x = len(screen[0])
         last_found_y = len(screen)
 
-        for x in range(len(screen[0]) - 2, -2, -4):
-            for y in range(0, len(screen), 4):
-
+        # Go through the screen from right top doing each column toward the left
+        for x in range(len(screen[0]) - 2, -2, -NUMBER_OF_PIXEL_ANALYSE_PER_SCREENSHOT):
+            for y in range(0, len(screen), NUMBER_OF_PIXEL_ANALYSE_PER_SCREENSHOT):
                 if screen[y][x] < BLACK_PIXEL_THRESHOLD and not (last_found_x - x < DISTANCE_FROM_LAST_CLICK["x"] * 2 and last_found_y - y < DISTANCE_FROM_LAST_CLICK["y"] * 2):
                     actual_x = self.game_coordinates["x_top_left"] + Utils.resizeCoordinateToActualScreen(x)
                     actual_y = self.game_coordinates["y_top_left"] + Utils.resizeCoordinateToActualScreen(y)
