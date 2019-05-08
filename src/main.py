@@ -8,6 +8,5 @@ def main():
     ActionController.launchStormTheHouse()
     ActionController.playStormTheHouse(False, True)
 
-
 if __name__ == '__main__':
     main()
