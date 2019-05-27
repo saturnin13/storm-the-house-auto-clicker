@@ -1,3 +1,6 @@
+import os
+
+import logging
 import time
 
 from constant import SPACE, COMMAND, ENTER, T_KEY, GAME_LINK, POSITION_PLAY_BUTTON, SPOTLIGHT_CHROME
@@ -24,4 +27,6 @@ class ActionController:
 
     @staticmethod
     def playStormTheHouse(activateOnLeftScreenTouch, automaticMenuSkipping):
-        StormTheHouseAutoClicker().start(activateOnLeftScreenTouch, automaticMenuSkipping)
+        player = os.getenv('STORM_THE_HOUSE_PLAYER', 'sat')
+        game = StormTheHouseAutoClicker(player=player, log_level=logging.DEBUG)
+        game.start(activateOnLeftScreenTouch, automaticMenuSkipping)

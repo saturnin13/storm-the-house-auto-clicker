@@ -10,6 +10,7 @@ from constant import BLACK_PIXEL_THRESHOLD, CLICK_POSITION_LATENCY
 print(pyautogui.size())
 print(pyautogui.position())
 
+
 class MouseController:
     mouse = Controller()
 
@@ -28,6 +29,7 @@ class MouseController:
     def moveTo(x, y):
         # pyautogui.moveTo(x, y)
         MouseController.mouse.position = (x, y)
+
 
 class KeyboardController:
     @staticmethod
@@ -50,11 +52,12 @@ class KeyboardController:
     def hotkey(*keyCodes):
         pyautogui.hotkey(*keyCodes)
 
+
 class ScreenController:
     @staticmethod
     def screenshot(box_coordinates=None):
         with mss.mss() as sct:
-            if(box_coordinates):
+            if box_coordinates:
                 return numpy.array(sct.grab(box_coordinates))
             else:
                 return numpy.array(sct.grab())
