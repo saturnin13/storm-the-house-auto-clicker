@@ -121,7 +121,8 @@ class StormTheHouseAutoClicker:
         grey_ammo_pixel = cv2.cvtColor(ammo_pixel, cv2.COLOR_BGR2GRAY)[0][0]
         self.logger.info("Ammo with bar color %d", grey_ammo_pixel)
 
-        return grey_ammo_pixel <= 120  # 114 for the empty and 243 for full
+        # return grey_ammo_pixel <= 120  # 114 for the empty and 243 for full <-- for Louis Blin's Mac
+        return grey_ammo_pixel > 195  # 219 for the empty and 194 for full
 
     def __upgradeStuff(self):
         MouseController.click(self.sniper_button_coordinates["x"], self.sniper_button_coordinates["y"])
